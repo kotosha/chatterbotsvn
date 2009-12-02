@@ -1,0 +1,29 @@
+#created on: 2009-12-02
+package chatbot.engine
+
+#list any import classes here.
+
+
+
+#declare any global variables here
+
+
+
+
+rule "Your First Rule"
+	
+	when
+		eval(1==2)
+	then 
+		System.out.println("Oh it works");
+		
+end
+
+rule "Your Second Rule"
+	#include attributes such as "salience" here...
+	when
+		#conditions
+	then 
+		#actions
+		
+end
