@@ -1,29 +1,37 @@
 #created on: 2009-12-02
 package chatbot.engine
+import chatbot.user.User;
+import chatbot.engine.ChatbotEngine;
 
-#list any import classes here.
+function boolean pasuje(String value, String pattern )
+{
+	boolean jest=false;
+	String rob=" "+value+" ";
+	if (rob.indexOf(" "+pattern+" ")>=0)
+	  jest=true;
+	 
+	return jest;  
+}
 
-
-
-#declare any global variables here
-
-
-
-
-rule "Your First Rule"
+rule "Przywitaj sie"
 	
 	when
-		eval(1==2)
-	then 
-		System.out.println("Oh it works");
+		$u : User()
 		
-end
-
-rule "Your Second Rule"
-	#include attributes such as "salience" here...
-	when
-		#conditions
+		eval( 	pasuje($u.getMessage(),"CZESC")||
+				pasuje($u.getMessage(),"HEJ")||
+				pasuje($u.getMessage(),"SIEMA")||
+				pasuje($u.getMessage(),"CZE")||
+				pasuje($u.getMessage(),"WITKA")||
+				pasuje($u.getMessage(),"YO")||
+				pasuje($u.getMessage(),"JO")||
+				pasuje($u.getMessage(),"ELO")||
+				pasuje($u.getMessage(),"HEJKA")||
+				pasuje($u.getMessage(),"HELO")||
+				pasuje($u.getMessage(),"HELLO")||
+				pasuje($u.getMessage(),"WITAM")||
+				pasuje($u.getMessage(),"WITAJ"))
 	then 
-		#actions
 		
+		System.out.println("Oh it works");	
 end

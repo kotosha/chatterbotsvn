@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
 import chatbot.engine.ChatbotEngine;
+import chatbot.engine.ChatbotEngine.Nastroj;
+import chatbot.user.User;
 
 public class TestChatbotEngine {
 
@@ -12,7 +14,7 @@ public class TestChatbotEngine {
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		
+//		System.out.println("jestem");
 		String zdanie = "";
 		//System.out.println();
 		
@@ -21,10 +23,12 @@ public class TestChatbotEngine {
 		
 		try {
 			ChatbotEngine chatbot = new ChatbotEngine();
+		//	chatbot.setNastrojChatbota(Nastroj.dobry);
 			System.out.println("Uzytkownik: ");
 			zdanie = in.readLine().toUpperCase();
 			
-			while(!zdanie.equals("exit"))
+			
+			while(!zdanie.equals(("exit").toUpperCase()))
 			{
 			
 				System.out.println("Chatbot: ");	

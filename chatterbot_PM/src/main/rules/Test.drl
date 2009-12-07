@@ -1,0 +1,31 @@
+#created on: 2009-12-07
+package chatbot.engine
+import chatbot.user.User;
+
+rule "User daniel exists"
+
+	when
+		$user : User(age > 10)
+	then 
+		System.out.println("There's one person called"+$user.getName());	
+		
+end
+
+
+rule "User daniel not exists"
+	
+	when
+		User($name:name)
+	then 
+		System.out.println("There's not any person called "+$name);	
+		
+end
+
+rule "Your Second Rule"
+	#include attributes such as "salience" here...
+	when
+		#conditions
+	then 
+		#actions
+		
+end

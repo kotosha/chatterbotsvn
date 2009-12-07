@@ -15,16 +15,11 @@ import org.drools.runtime.StatefulKnowledgeSession;
 import chatbot.user.User;
 
 public class ChatbotEngine {
-	User user;
-	
-	
-	
+	//User user = new User();;
 
 	public ChatbotEngine() {
-		super();
 		// TODO Auto-generated constructor stub
 	}
-
 
 
 	/**
@@ -61,21 +56,29 @@ public static enum Nastroj{dobry,zly,wesoly,smutny,przygnebiony };
 		 
 		return jest;  
 		}
+//	//testowy
+//	 public static final String main(String zdanie) {
+//		 System.out.println("wywolanie");
+//		 return "";
+//	 }
 	
-	 public String main(String zdanie) {
-	        try {
-	        	//System.out.println(zdanie);
-	        	//TODO cos tu nie gra
-	       //	user.setMessage(zdanie);
-	        	user.getMessage();
+	 public final String main(String zdanie) {
+	       
+	        	
+	        	//user.getMessage();
 	        	//user.setMessage(zdanie);
 	        //	user.setRegula_rozpoznana(false);
 	        	//load up the rulebase
-	        	KnowledgeBase kbase = readKnowledgeBase();
+	        	KnowledgeBase kbase = createKnowledgeBase();
 				StatefulKnowledgeSession ksession = kbase.newStatefulKnowledgeSession();
-				KnowledgeRuntimeLogger logger = KnowledgeRuntimeLoggerFactory.newFileLogger(ksession, "test");
+			//	KnowledgeRuntimeLogger logger = KnowledgeRuntimeLoggerFactory.newFileLogger(ksession, "test");
 																
-	                  
+				 try {
+				//	 zdanie="sranie";
+					User user = new User();	 
+					User user2 = new User("daniel",23);
+					user.setMessage(zdanie);
+				//	System.out.println("User mowi: "+zdanie);
 //	          setup the debug listeners
 				//logger.addEventListener( new DebugAgendaEventListener() );
 	     //      workingMemory.addEventListener( new DebugWorkingMemoryEventListener() );
@@ -83,47 +86,44 @@ public static enum Nastroj{dobry,zly,wesoly,smutny,przygnebiony };
 //	             setup the audit logging
 	       //     ((WorkingMemoryFileLogger) logger).setFileName( "log/hello" );     
 	            
-	           ksession.insert( user );
+					ksession.insert( user );
+					ksession.insert( user2 );
 	           // workingMemory.insert( kontekst );            
 	          
 
 	            ksession.fireAllRules();   
-	            logger.close();
+	       //     logger.close();
 	            
 	            //System.out.println(message.getMessage());
 	            
-	        } catch (Throwable t) {
-	            t.printStackTrace();
 	        }
+				 finally {
+					 ksession.dispose();
+					 	
+				 }
 	        
 	        return "";
 	    }
 	 
 
-		public ChatbotEngine(Nastroj nastrojChatbota) {
-			super();
-			user = new User();
-			this.nastrojChatbota = nastrojChatbota;
-		}
+	
 		
 
 	    /**
 	     * Please note that this is the "low level" rule assembly API.
 	     */
-	 private static KnowledgeBase readKnowledgeBase() throws Exception {
+	 private static KnowledgeBase createKnowledgeBase() {
 			KnowledgeBuilder kbuilder = KnowledgeBuilderFactory.newKnowledgeBuilder();
-			kbuilder.add(ResourceFactory.newClassPathResource("Sample.drl"), ResourceType.DRL);
+		//	kbuilder.add(ResourceFactory.newClassPathResource("Sample.drl"), ResourceType.DRL);
 			kbuilder.add(ResourceFactory.newClassPathResource("Salutation.drl"), ResourceType.DRL);
+			kbuilder.add(ResourceFactory.newClassPathResource("Test.drl"), ResourceType.DRL);
+			
 			KnowledgeBuilderErrors errors = kbuilder.getErrors();
-			if (errors.size() > 0) {
-				for (KnowledgeBuilderError error: errors) {
-					System.err.println(error);
-				}
-				throw new IllegalArgumentException("Could not parse knowledge.");
+			if (kbuilder.hasErrors()) {
+				throw new RuntimeException(kbuilder.getErrors().toString());
 			}
 			KnowledgeBase kbase = KnowledgeBaseFactory.newKnowledgeBase();
 			kbase.addKnowledgePackages(kbuilder.getKnowledgePackages());
 			return kbase;
 		}
-
 }
