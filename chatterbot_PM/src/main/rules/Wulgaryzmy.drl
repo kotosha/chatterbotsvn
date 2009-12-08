@@ -1,0 +1,39 @@
+#created on: 2009-12-08
+package chatbot.engine
+import chatbot.user.User;
+import chatbot.engine.ChatbotEngine;
+import java.util.Random;
+import chatbot.helper.Helper;
+
+
+
+rule "Wylap wulgaryzmy"
+	salience 100
+	when
+		$u : User()
+		$h : Helper(  )
+		
+		eval( 	$u.pasuje($u.getMessage(),"DUPA")||
+				$u.pasuje($u.getMessage(),"HUJ")||
+				$u.pasuje($u.getMessage(),"CHUJ")||
+				$u.pasuje($u.getMessage(),"CIPA")||
+				$u.pasuje($u.getMessage(),"GOWNO")||
+				$u.pasuje($u.getMessage(),"FRAJER")||
+				$u.pasuje($u.getMessage(),"CIOTA")||
+				$u.pasuje($u.getMessage(),"GEJ")||
+	then 
+		switch ($h.randomGen(8)){
+		case 1: $u.setMessage( "UWAZAJ JAK SIE WYRAZASZ");break;
+		case 2: $u.setMessage( "TWOJ SPOSOB WYRAZANIA NIE BEDZIE TOLEROWANY" );break;
+		case 3: $u.setMessage( "JESTES WULGARNY, MASZ OSTRZEZENIE" );break;
+		case 4: $u.setMessage( "JESTES ZLE WYCHOWANY" );break;
+		case 5: $u.setMessage( "NIE BEDZIEMY TAK DLUZEJ ROZMAWIAC" );break;
+		case 6: $u.setMessage( "NIE PODOBA MI SIE TON TWEGO GLOSU" );break;
+		case 7: $u.setMessage( "MASZ OSTATNIA SZANSE" );break;
+		case 8: $u.setMessage( "CZY JA BYLEM DLA CIEBIE NIE MILY?" );break;
+		default: $u.setMessage("Blad w : CZY JESTES ");break;
+		}
+		System.out.println($u.getMessage());
+		
+end
+
