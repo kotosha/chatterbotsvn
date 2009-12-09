@@ -40,23 +40,7 @@ public static enum Nastroj{dobry,zly,wesoly,smutny,przygnebiony };
 		this.nastrojChatbota = nastrojChatbota;
 	}
 
-	/**
-	 * Pomocnicza funkcja dopasowujaca @szablon do @wzorca
-	 * @param wzorzec
-	 * @param szablon
-	 * @return jest
-	 * @return_type boolean
-	 */
-	public boolean pasuje(String wzorzec,String szablon) {
-		boolean jest=false;
-		String rob=" "+wzorzec+" ";
-		if (rob.indexOf(" "+szablon+" ")>=0)
-		 {
-		  jest=true;
-		 }
-		 
-		return jest;  
-		}
+
 //	//testowy
 //	 public static final String main(String zdanie) {
 //		 System.out.println("wywolanie");
@@ -75,7 +59,6 @@ public static enum Nastroj{dobry,zly,wesoly,smutny,przygnebiony };
 			//	KnowledgeRuntimeLogger logger = KnowledgeRuntimeLoggerFactory.newFileLogger(ksession, "test");
 																
 				 try {
-					Helper h = new Helper();
 					User user = new User();	 
 					User user2 = new User("daniel",23);
 					user.setMessage(zdanie);
@@ -88,7 +71,6 @@ public static enum Nastroj{dobry,zly,wesoly,smutny,przygnebiony };
 	       //     ((WorkingMemoryFileLogger) logger).setFileName( "log/hello" );     
 	            
 					ksession.insert( user );
-					ksession.insert( h );
 					ksession.insert( user2 );
 	           // workingMemory.insert( kontekst );            
 	          

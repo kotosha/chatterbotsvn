@@ -5,7 +5,14 @@ import java.util.Random;
 public class Helper {
 
 
-	public boolean pasuje(String value, String pattern )
+	/**
+	 * Pomocnicza funkcja dopasowujaca @szablon do @wzorca
+	 * @param wzorzec
+	 * @param szablon
+	 * @return jest
+	 * @return_type boolean
+	 */
+	public static boolean pasuje(String value, String pattern )
 	{
 		boolean jest=false;
 		String rob=" "+value+" ";
@@ -15,7 +22,7 @@ public class Helper {
 		return jest;  
 	}
 	
-	public int randomGen(int ile)
+	public static int randomGen(int ile)
 	  {
 	   Random generator = new Random();  
 	  

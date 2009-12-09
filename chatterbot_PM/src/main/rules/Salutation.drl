@@ -3,33 +3,33 @@ package chatbot
 import chatbot.user.User;
 import chatbot.engine.ChatbotEngine;
 import java.util.Random;
-import chatbot.helper.Helper;
-
+import function chatbot.helper.Helper.pasuje;
+import function chatbot.helper.Helper.randomGen;
 
 
 rule "Przywitaj sie"
 	
 	when
 		$u : User()
-		$h : Helper(  )
+	
 		
-		eval( 	$h.pasuje($u.getMessage(),"CZESC")||
-				$h.pasuje($u.getMessage(),"HEJ")||
-				$h.pasuje($u.getMessage(),"SIEMA")||
-				$h.pasuje($u.getMessage(),"CZE")||
-				$h.pasuje($u.getMessage(),"WITKA")||
-				$h.pasuje($u.getMessage(),"YO")||
-				$h.pasuje($u.getMessage(),"JO")||
-				$h.pasuje($u.getMessage(),"ELO")||
-				$h.pasuje($u.getMessage(),"HEJKA")||
-				$h.pasuje($u.getMessage(),"HELO")||
-				$h.pasuje($u.getMessage(),"HELLO")||
-				$h.pasuje($u.getMessage(),"WITAM")||
-				$h.pasuje($u.getMessage(),"WITAJ"))
+		eval( 	pasuje($u.getMessage(),"CZESC")||
+				pasuje($u.getMessage(),"HEJ")||
+				pasuje($u.getMessage(),"SIEMA")||
+				pasuje($u.getMessage(),"CZE")||
+				pasuje($u.getMessage(),"WITKA")||
+				pasuje($u.getMessage(),"YO")||
+				pasuje($u.getMessage(),"JO")||
+				pasuje($u.getMessage(),"ELO")||
+				pasuje($u.getMessage(),"HEJKA")||
+				pasuje($u.getMessage(),"HELO")||
+				pasuje($u.getMessage(),"HELLO")||
+				pasuje($u.getMessage(),"WITAM")||
+				pasuje($u.getMessage(),"WITAJ"))
 	then 
 		
 		
-		switch ($h.randomGen(9)){
+		switch (randomGen(9)){
 		case 1: $u.setMessage( "CZESC");break;
 		case 2: $u.setMessage( "HEJ" );break;
 		case 3: $u.setMessage( "SIEMA" );break;
