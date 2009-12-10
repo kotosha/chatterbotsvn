@@ -6,6 +6,8 @@ import java.util.Random;
 import chatbot.helper.Helper;
 import function chatbot.helper.Helper.pasuje;
 import function chatbot.helper.Helper.randomGen;
+import chatbot.chatbot.Chatbot;
+global Chatbot chatbot;
 
 
 rule "Wylap wulgaryzmy"
@@ -37,5 +39,7 @@ rule "Wylap wulgaryzmy"
 		case 8: $u.setMessage( "CZY JA BYLEM DLA CIEBIE NIE MILY?" );break;
 		default: $u.setMessage("Blad w : CZY JESTES ");break;
 		}
-		System.out.println($u.getMessage());	
+		
+		modify($u){setCountVulgarism()}
+		System.out.println($u.getMessage()+" przeklales "+$u.getCountVulgarism()+" razy");	
 end

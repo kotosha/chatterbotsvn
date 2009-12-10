@@ -3,24 +3,36 @@ package chatbot.user;
 public class User {
 
 
-	public User(String name, int age) {
-		this.name = name;
-		this.age = age;
-	}
-	
-	
-	public User() {
-		// TODO Auto-generated constructor stub
-	}
-
 
 	public static enum Nastroj{dobry,zly,wesoly,smutny,przygnebiony };
+	public static enum Status{przywitany};
 	
 	private String message;
 	public Nastroj nastroj;
 	private String name;
 	private int age;
+	private Status status;
+	private int countVulgarism=0;
 
+	public int getCountVulgarism() {
+		return countVulgarism;
+	}
+
+	public void setCountVulgarism() {
+		this.countVulgarism += 1;
+	}
+
+
+	/**
+	 * Ustala akcje ktora nastapila
+	 * @return
+	 */
+	public Status getStatus() {
+		return status;
+	}
+	public void setStatus(Status status) {
+		this.status = status;
+	}
 	/**
 	 * ustala nastroj użytkownika
 	 */
@@ -52,5 +64,17 @@ public class User {
 	public void setAge(int age) {
 		this.age = age;
 	}
+	
+
+	public User(String name, int age) {
+		this.name = name;
+		this.age = age;
+	}
+	
+	
+	public User() {
+		// TODO Auto-generated constructor stub
+	}
+
 	
 }

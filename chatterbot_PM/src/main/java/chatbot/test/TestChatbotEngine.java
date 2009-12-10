@@ -2,11 +2,7 @@ package chatbot.test;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-
 import chatbot.engine.ChatbotEngine;
-import chatbot.engine.ChatbotEngine.Nastroj;
-import chatbot.user.User;
-
 public class TestChatbotEngine {
 
 	/**
@@ -22,7 +18,7 @@ public class TestChatbotEngine {
 		BufferedReader in = new BufferedReader(stdin);
 		
 		try {
-			ChatbotEngine chatbot = new ChatbotEngine();
+			ChatbotEngine chatbotEngine = new ChatbotEngine();
 		//	chatbot.setNastrojChatbota(Nastroj.dobry);
 			System.out.println("Uzytkownik: ");
 			zdanie = in.readLine().toUpperCase();
@@ -32,7 +28,7 @@ public class TestChatbotEngine {
 			{
 			
 				System.out.println("Chatbot: ");	
-				System.out.println(chatbot.main(zdanie));
+				System.out.println(chatbotEngine.main(zdanie));
 				zdanie = "";
 				System.out.println("Uzytkownik: ");
 				zdanie=in.readLine().toUpperCase();
