@@ -14,11 +14,11 @@ rule "Wylap wulgaryzmy"
 		$u : User()
 	
 		
-		eval( 	pasuje($u.getMessage(),"DUPA")  ||
-				pasuje($u.getMessage(),"HUJ")	||
-				pasuje($u.getMessage(),"CHUJ")	||
-				pasuje($u.getMessage(),"CIPA")	||
-				pasuje($u.getMessage(),"GOWNO")	||
+		eval( 	pasuje($u.getMessage(),"JELEN")  ||
+				pasuje($u.getMessage(),"MENDA")	||
+				pasuje($u.getMessage(),"CWANIAK")	||
+				pasuje($u.getMessage(),"DEBIL")	||
+				pasuje($u.getMessage(),"MATOL")	||
 				pasuje($u.getMessage(),"FRAJER")||
 				pasuje($u.getMessage(),"CIOTA")	||
 				pasuje($u.getMessage(),"GEJ")

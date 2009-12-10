@@ -16,12 +16,19 @@ import chatbot.helper.Helper;
 import chatbot.user.User;
 
 public class ChatbotEngine {
-	//User user = new User();;
+	
+	int countVulgarism;
 
-	public ChatbotEngine() {
-		// TODO Auto-generated constructor stub
+
+
+
+	public int getCountVulgarism() {
+		return countVulgarism;
 	}
 
+	public void setCountVulgarism(int countVulgarism) {
+		this.countVulgarism += countVulgarism;
+	}
 
 	/**
 	 * Opisuje nastrój Chatbota
@@ -110,5 +117,9 @@ public static enum Nastroj{dobry,zly,wesoly,smutny,przygnebiony };
 			KnowledgeBase kbase = KnowledgeBaseFactory.newKnowledgeBase();
 			kbase.addKnowledgePackages(kbuilder.getKnowledgePackages());
 			return kbase;
+		}
+	 
+		public ChatbotEngine() {
+			// TODO Auto-generated constructor stub
 		}
 }
