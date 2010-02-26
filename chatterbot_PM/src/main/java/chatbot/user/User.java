@@ -5,14 +5,14 @@ public class User {
 
 
 	public static enum Nastroj{dobry,zly,wesoly,smutny,przygnebiony };
-	public static enum Status{przywitany};
+	public static enum Status{przywitany,nieprzywitany,pozegnany};
 	
 	private String message;
 	public Nastroj nastroj;
 	private String name;
 	private int age;
-	private Status status;
-	private int countVulgarism=0;
+	public Status status;
+	private int countVulgarism = 0;
 
 	public int getCountVulgarism() {
 		return countVulgarism;
@@ -69,11 +69,12 @@ public class User {
 	public User(String name, int age) {
 		this.name = name;
 		this.age = age;
+		this.status = User.Status.nieprzywitany;
 	}
 	
 	
 	public User() {
-		// TODO Auto-generated constructor stub
+		this.status = User.Status.nieprzywitany;
 	}
 
 	

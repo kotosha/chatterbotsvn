@@ -1,0 +1,52 @@
+#created on: 2010-02-18
+package chatbot
+
+#list any import classes here.
+import chatbot.chatbot.Chatbot;
+import chatbot.user.User;
+import function chatbot.helper.Helper.pasuje;
+
+#declare any global variables here
+
+
+
+
+rule "Jaki humor Chatbota?"
+	dialect "mvel" 
+	when
+		$u : User()	
+		$c : Chatbot()
+		eval( 	pasuje($u.getMessage(),"HUMOR"))
+	then 
+		System.out.println("Pytasz jaki mam humor?");
+		System.out.println("$c.pytanie"+$c.pytanie);
+		System.out.println("$c.nastrojChatbota"+$c.nastrojChatbota);
+end
+
+rule "Humor - potwierdz"
+	dialect "mvel" 
+	when
+		$u : User()	
+		$c : Chatbot()
+		eval( 	pasuje($u.getMessage(),"TAK"))
+	then
+		$c.pytanie = true;
+		modify($c){}	
+end
+
+rule "Jaki humor? - True"
+	dialect "mvel" 
+	when
+		$c : Chatbot($c.pytanie == true, $c.nastrojChatbota == Chatbot.Nastroj.dobry)
+	then 
+		System.out.println("Mam dobry nastrój");	
+end
+
+rule "monit"
+	when
+		$c : Chatbot()
+	then
+		System.out.println("Monit");
+		System.out.println("$c.pytanie"+$c.pytanie);
+		System.out.println("$c.nastrojChatbota"+$c.nastrojChatbota);
+end

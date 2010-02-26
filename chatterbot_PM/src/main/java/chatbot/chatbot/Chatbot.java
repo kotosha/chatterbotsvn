@@ -1,7 +1,5 @@
 package chatbot.chatbot;
 
-import chatbot.chatbot.Chatbot.Nastroj;
-
 public class Chatbot {
 	
 
@@ -13,7 +11,18 @@ public class Chatbot {
 public static enum Nastroj{dobry,zly,wesoly,smutny,przygnebiony };
 	
 		public Nastroj nastrojChatbota;
+		public boolean pytanie;
 		
+		
+		
+	public boolean isPytanie() {
+			return pytanie;
+		}
+
+		public void setPytanie(boolean pytanie) {
+			this.pytanie = pytanie;
+		}
+
 	public Nastroj getNastrojChatbota() {
 		return nastrojChatbota;
 	}
@@ -23,6 +32,7 @@ public static enum Nastroj{dobry,zly,wesoly,smutny,przygnebiony };
 	}
 
 	public Chatbot() {
-		
+		this.pytanie = false;
+		this.nastrojChatbota = Chatbot.Nastroj.dobry;
 	}
 }

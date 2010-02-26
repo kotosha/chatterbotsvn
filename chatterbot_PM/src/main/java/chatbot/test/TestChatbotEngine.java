@@ -6,6 +6,7 @@ import chatbot.engine.ChatbotEngine;
 public class TestChatbotEngine {
 
 	/**
+	 * 
 	 * @param args
 	 */
 	public static void main(String[] args) {
@@ -19,7 +20,6 @@ public class TestChatbotEngine {
 		
 		try {
 			ChatbotEngine chatbotEngine = new ChatbotEngine();
-		//	chatbot.setNastrojChatbota(Nastroj.dobry);
 			System.out.println("Uzytkownik: ");
 			zdanie = in.readLine().toUpperCase();
 			
@@ -31,9 +31,10 @@ public class TestChatbotEngine {
 				System.out.println(chatbotEngine.main(zdanie));
 				zdanie = "";
 				System.out.println("Uzytkownik: ");
+			
 				zdanie=in.readLine().toUpperCase();
 				
-				//chatbot.main(zdanie);
+				chatbotEngine.main(zdanie);
 				
 			}
 			

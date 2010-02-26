@@ -3,20 +3,19 @@ package chatbot.engine;
 import org.drools.KnowledgeBase;
 import org.drools.KnowledgeBaseFactory;
 import org.drools.builder.KnowledgeBuilder;
-import org.drools.builder.KnowledgeBuilderError;
 import org.drools.builder.KnowledgeBuilderErrors;
 import org.drools.builder.KnowledgeBuilderFactory;
 import org.drools.builder.ResourceType;
-import org.drools.event.DebugAgendaEventListener;
-import org.drools.event.DebugWorkingMemoryEventListener;
+import org.drools.event.rule.DebugAgendaEventListener;
+import org.drools.event.rule.DebugWorkingMemoryEventListener;
 import org.drools.event.rule.WorkingMemoryEventListener;
+import org.drools.io.Resource;
 import org.drools.io.ResourceFactory;
 import org.drools.logger.KnowledgeRuntimeLogger;
 import org.drools.logger.KnowledgeRuntimeLoggerFactory;
 import org.drools.runtime.StatefulKnowledgeSession;
 
 import chatbot.chatbot.Chatbot;
-import chatbot.helper.Helper;
 import chatbot.user.User;
 
 /**
@@ -32,25 +31,29 @@ public class ChatbotEngine {
 	        
 	        	KnowledgeBase kbase = createKnowledgeBase();
 				StatefulKnowledgeSession ksession = kbase.newStatefulKnowledgeSession();
-	//			KnowledgeRuntimeLogger logger = KnowledgeRuntimeLoggerFactory.newFileLogger(ksession, "test");
+			//	KnowledgeRuntimeLogger logger = KnowledgeRuntimeLoggerFactory.newFileLogger(ksession, "test");
 																
 				 try {
 					User user = new User();	 
-					User user2 = new User("daniel",23);
+			//		User user2 = new User("daniel",23);
 					user.setMessage(zdanie);
 	
 					Chatbot chatbot = new Chatbot();
-					//chatbot
-				//	ksession.addEventListener( (WorkingMemoryEventListener) new DebugAgendaEventListener() );
+						//chatbot
+			//		ksession.addEventListener( (WorkingMemoryEventListener) new DebugAgendaEventListener() );
 				//	ksession.addEventListener( (WorkingMemoryEventListener) new DebugWorkingMemoryEventListener() );
 	                    
       
 					ksession.insert( user );
-					ksession.insert( user2 );
-					ksession.setGlobal("chatbot", chatbot);
+					ksession.insert(chatbot);
+		//			System.out.println("$c.pytanie"+chatbot.isPytanie());
+			//		System.out.println("$c.nastrojChatbota"+chatbot.getNastrojChatbota());
+				
+		//			ksession.insert( user2 );
+				//	ksession.setGlobal("chatbot", chatbot);
 
 	            ksession.fireAllRules();   
-	       //     logger.close();
+	          //  logger.close();
 	            
 	            
 	        }
@@ -74,7 +77,8 @@ public class ChatbotEngine {
 		//	kbuilder.add(ResourceFactory.newClassPathResource("Sample.drl"), ResourceType.DRL);
 			kbuilder.add(ResourceFactory.newClassPathResource("Salutation.drl"), ResourceType.DRL);
 		//	kbuilder.add(ResourceFactory.newClassPathResource("Test.drl"), ResourceType.DRL);
-			kbuilder.add(ResourceFactory.newClassPathResource("Wulgaryzmy.drl"), ResourceType.DRL);
+//		/	kbuilder.add(ResourceFactory.newClassPathResource("Wulgaryzmy.drl"), ResourceType.DRL);
+			//kbuilder.add(ResourceFactory.newClassPathResource("humor.drl"), ResourceType.DRL);
 			
 			KnowledgeBuilderErrors errors = kbuilder.getErrors();
 			if (kbuilder.hasErrors()) {

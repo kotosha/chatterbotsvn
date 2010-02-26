@@ -6,11 +6,30 @@ import java.util.Random;
 import function chatbot.helper.Helper.pasuje;
 import function chatbot.helper.Helper.randomGen;
 
+rule "Monit"
+	dialect "mvel" 
+	when
+		eval(true)
+		$u:User()
+	then
+	#	System.out.println("Czesc men");
+		System.out.println("Status: "+$u.status);
+
+		
+end
+
+rule "Chatbot sie wita"
+	dialect "mvel" 
+	when
+		$u : User($u.status == User.Status.nieprzywitany)
+	then
+		System.out.println("Czesc, jesetem Chatbotem, na poczatku przydaloby sie przywitac");	
+end
 
 rule "Przywitaj sie"
 	
 	when
-		$u : User()
+		$u : User($u.status == User.Status.nieprzywitany)
 	
 		
 		eval( 	pasuje($u.getMessage(),"CZESC")||
@@ -39,8 +58,28 @@ rule "Przywitaj sie"
 		case 7: $u.setMessage( "WITAM" );break;
 		case 8: $u.setMessage( "WITAJ" );break;
 		case 9: $u.setMessage( "DZIEN DOBRY" );break;
-		default: $u.setMessage("Blad w : CZY JESTES ");break;
 		}
 		System.out.println($u.getMessage());	
+		$u.setStatus(User.Status.przywitany);
+		modify($u){}
 end
 
+rule "Pozegnaj sie"
+	
+	when
+		$u : User($u.status == User.Status.nieprzywitany)
+	
+		
+		eval( 	pasuje($u.getMessage(),"PAPA")||
+				pasuje($u.getMessage(),"ZEGNAJ")||
+				pasuje($u.getMessage(),"NARAZIE")||
+	then 
+		switch (randomGen(3)){
+		case 1: $u.setMessage( "PAPA");break;
+		case 2: $u.setMessage( "ZEGNAJ" );break;
+		case 3: $u.setMessage( "NARAZIE" );break;
+		}
+		System.out.println($u.getMessage());	
+		$u.setStatus(User.Status.pozegnany);
+		modify($u){}
+end
