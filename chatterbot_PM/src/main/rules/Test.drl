@@ -1,31 +1,17 @@
 #created on: 2009-12-07
-package chatbot.engine
-import chatbot.user.User;
+package chatbot
+import chatbot.User;
+import chatbot.Chatbot;
 
-rule "User daniel exists"
-
+rule "Sledz wulgaryzmy"
+no-loop true
 	when
-		$user : User(age > 10)
-	then 
-		System.out.println("There's one person called"+$user.getName());	
-		
-end
-
-
-rule "User daniel not exists"
-	
-	when
-		User($name:name)
-	then 
-		System.out.println("There's not any person called "+$name);	
-		
-end
-
-rule "Your Second Rule"
-	#include attributes such as "salience" here...
-	when
-		#conditions
-	then 
-		#actions
-		
+		$c : Chatbot()
+		$u : User()
+	then
+		System.out.println(" przeklales: "+$c.getCountVulgarism()+" razy");	
+		System.out.println(" Humor Chatbota: " + $c.getNastroj());
+		System.out.println(" Humor Usera: " + $u.getNastroj());
+		System.out.println(" Przywitanie Usera: " + $u.getPrzywitanie());
+		System.out.println(" Stan Usera: " + $c.getStany());
 end

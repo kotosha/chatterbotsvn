@@ -1,0 +1,71 @@
+#created on: 2010-05-05
+package chatbot
+
+#list any import classes here.
+import chatbot.User;
+import chatbot.Chatbot;
+import chatbot.Helper;
+import chatbot.ChatbotEngine;
+import function chatbot.Helper.pasuje;
+
+
+
+#declare any global variables here
+
+
+rule "Dobry humor"
+	
+	when
+		$u : User ( nastroj == User.Nastroj.DOBRY )
+		eval( 	pasuje($u.getMessage(),"HUMOR"))
+	then 
+	//	System.out.println("Widze ze masz dobry nastroj");
+		$u.setMessage( "Widze ze masz dobry nastroj");
+		System.out.println($u.getMessage());
+end
+
+rule "Zly humor"
+	
+	when
+		$u : User ( nastroj == User.Nastroj.ZLY )
+		$h : Helper ()
+		eval( 	pasuje($u.getMessage(),"HUMOR"))
+	then 
+		//System.out.println("Widze ze masz zly nastroj, chcesz pogadac?");
+		$u.setMessage( "Widze ze masz zly nastroj, chcesz pogadac?");
+		System.out.println($u.getMessage());
+		$h.rozweselUsera();
+		
+end
+
+rule "Smutny humor"
+	
+	when
+		$u : User ( nastroj == User.Nastroj.SMUTNY )
+		eval( 	pasuje($u.getMessage(),"HUMOR"))
+	then 
+	//	System.out.println("Widze ze jestes smutny");
+		$u.setMessage( "Widze ze jestes smutny");
+		System.out.println($u.getMessage());
+		
+end
+
+rule "Przygnebiony humor"
+	
+	when
+		$u : User ( nastroj == User.Nastroj.PRZYGNEBIONY )
+		eval( 	pasuje($u.getMessage(),"HUMOR"))
+	then 
+		//System.out.println("Widze ze jesets przygnebiony");
+		$u.setMessage( "Widze ze jesets przygnebiony");
+		System.out.println($u.getMessage());
+end
+
+rule "Rozpoznaj humor"
+	#include attributes such as "salience" here...
+	when
+		#conditions
+	then 
+		#actions
+		
+end

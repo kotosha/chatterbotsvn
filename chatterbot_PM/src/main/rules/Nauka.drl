@@ -1,0 +1,61 @@
+package chatbot
+
+#list any import classes here.
+import chatbot.User;
+import chatbot.Chatbot;
+import chatbot.Helper;
+import function chatbot.Helper.pasuje;
+
+#declare any global variables here
+
+rule "Pytanie o nauke"
+no-loop 	
+	when
+		$u : User ( nastroj == User.Nastroj.DOBRY )
+		$c : Chatbot ()
+	    eval( 	pasuje($u.getMessage(),"NAUKA"))
+	then 
+		$u.setMessage( "Chcesz sie troche pouczyc?");
+		System.out.println($u.getMessage());
+		//System.out.println("Chcesz sie troche pouczyc?");
+		modify($c) {setStany(Chatbot.Stany.PYTANIE_NAUKA)};
+		
+end
+
+rule "Potwierdz chec nauki"
+no-loop 
+	when
+		$c : Chatbot (stany == Chatbot.Stany.PYTANIE_NAUKA)
+		$u : User()
+		eval( 	pasuje($u.getMessage(),"TAK"))
+	then 
+		//System.out.println("W takim razie rozpoczynamy nauke");
+		$u.setMessage( "W takim razie rozpoczynamy nauke");
+		System.out.println($u.getMessage());
+		modify($c) {setStany(Chatbot.Stany.NAUKA)};
+end
+
+rule "Zaprzecz chec nauki"
+	when
+		$c : Chatbot (stany == Chatbot.Stany.PYTANIE_NAUKA)
+		$u : User()
+		eval( 	pasuje($u.getMessage(),"NIE"))
+	then 
+		//System.out.println("Widze ze nie chcesz sie uczyc");
+		$u.setMessage( "Widze ze nie chcesz sie uczyc");
+		System.out.println($u.getMessage());
+end
+
+rule "Nauka [Wybor tematow]"
+	when
+		$c : Chatbot (stany == Chatbot.Stany.NAUKA)
+		$u : User()
+		
+		
+	then
+		$u.setMessage( "Przejdźmy do rzeczy. Wybierz jeden z dostepnych nizej zagadnien");
+		//$h.getListaTematow();
+		System.out.println($u.getMessage());
+end
+
+

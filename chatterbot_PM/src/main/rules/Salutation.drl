@@ -1,37 +1,29 @@
-#created on: 2009-12-02
 package chatbot
-import chatbot.user.User;
-import chatbot.engine.ChatbotEngine;
+
+import chatbot.User;
+import chatbot.Chatbot;
+import chatbot.ChatbotEngine;
 import java.util.Random;
-import function chatbot.helper.Helper.pasuje;
-import function chatbot.helper.Helper.randomGen;
+import function chatbot.Helper.pasuje;
+import function chatbot.Helper.randomGen;
 
-rule "Monit"
+rule "Nieprzywitany"
 	dialect "mvel" 
 	when
-		eval(true)
-		$u:User()
+	 $u : User( przywitanie == User.Przywitanie.NIEPRZYWITANY )
 	then
-	#	System.out.println("Czesc men");
-		System.out.println("Status: "+$u.status);
-
-		
-end
-
-rule "Chatbot sie wita"
-	dialect "mvel" 
-	when
-		$u : User($u.status == User.Status.nieprzywitany)
-	then
-		System.out.println("Czesc, jesetem Chatbotem, na poczatku przydaloby sie przywitac");	
+		//System.out.println("Na pocztatku wypadaloby sie przywitac!");
+		$u.setMessage( "Na pocztatku wypadaloby sie przywitac!");
+		System.out.println($u.getMessage());	
 end
 
 rule "Przywitaj sie"
-	
+no-loop true
+salience 100
 	when
-		$u : User($u.status == User.Status.nieprzywitany)
-	
 		
+		$u : User( przywitanie == User.Przywitanie.NIEPRZYWITANY )
+		$c : Chatbot()
 		eval( 	pasuje($u.getMessage(),"CZESC")||
 				pasuje($u.getMessage(),"HEJ")||
 				pasuje($u.getMessage(),"SIEMA")||
@@ -45,9 +37,9 @@ rule "Przywitaj sie"
 				pasuje($u.getMessage(),"HELLO")||
 				pasuje($u.getMessage(),"WITAM")||
 				pasuje($u.getMessage(),"WITAJ"))
-	then 
-		
-		
+	then 	
+		modify($u) {setPrzywitanie(User.Przywitanie.PRZYWITANY)};
+			
 		switch (randomGen(9)){
 		case 1: $u.setMessage( "CZESC");break;
 		case 2: $u.setMessage( "HEJ" );break;
@@ -60,26 +52,71 @@ rule "Przywitaj sie"
 		case 9: $u.setMessage( "DZIEN DOBRY" );break;
 		}
 		System.out.println($u.getMessage());	
-		$u.setStatus(User.Status.przywitany);
-		modify($u){}
+			
+		
 end
 
 rule "Pozegnaj sie"
-	
+no-loop true
+salience 10
 	when
-		$u : User($u.status == User.Status.nieprzywitany)
-	
 		
-		eval( 	pasuje($u.getMessage(),"PAPA")||
-				pasuje($u.getMessage(),"ZEGNAJ")||
+		$u : User(przywitanie == User.Przywitanie.PRZYWITANY)
+	
+	eval( 	pasuje($u.getMessage(),"CZESC")||
+				pasuje($u.getMessage(),"HEJ")||
+				pasuje($u.getMessage(),"SIEMA")||
+				pasuje($u.getMessage(),"CZE")||
+				pasuje($u.getMessage(),"NARA")||
+				pasuje($u.getMessage(),"YO")||
+				pasuje($u.getMessage(),"JO")||
+				pasuje($u.getMessage(),"ELO")||
+				pasuje($u.getMessage(),"ZEGNAM")||
+				pasuje($u.getMessage(),"DO ZOBACZENIA")||
 				pasuje($u.getMessage(),"NARAZIE")||
+				pasuje($u.getMessage(),"BYWAJ")||
+				pasuje($u.getMessage(),"CIAO"))
 	then 
-		switch (randomGen(3)){
-		case 1: $u.setMessage( "PAPA");break;
-		case 2: $u.setMessage( "ZEGNAJ" );break;
-		case 3: $u.setMessage( "NARAZIE" );break;
+		//System.out.println("Naprawde chcesz sie pozegnac?");	
+		$u.setMessage( "Naprawde chcesz sie pozegnac?");
+		System.out.println($u.getMessage());
+		modify($u) {setPrzywitanie(User.Przywitanie.CHCE_ZEGNAC)}	
+		
+		
+end
+
+rule "Potwierdz pozegnanie [TAK]"
+	when
+		$u : User( przywitanie == User.Przywitanie.CHCE_ZEGNAC)
+		eval( 	pasuje($u.getMessage(),"TAK"))	
+	then
+		modify($u) {setPrzywitanie(User.Przywitanie.ZEGNAJ)}	
+end
+
+rule "Potwierdz pozegnanie [NIE]"
+	when
+		$u : User( przywitanie == User.Przywitanie.CHCE_ZEGNAC)
+		eval( 	pasuje($u.getMessage(),"NIE"))	
+	then
+		modify($u) {setPrzywitanie(User.Przywitanie.PRZYWITANY)}	
+end
+
+rule "Pozegnaj"
+	when
+		$u : User( przywitanie == User.Przywitanie.ZEGNAJ  )
+	then
+		switch (randomGen(9)){
+		case 1: $u.setMessage( "CZESC");break;
+		case 2: $u.setMessage( "BYWAJ" );break;
+		case 3: $u.setMessage( "ZEGNAJ" );break;
+		case 4: $u.setMessage( "CZE" );break;
+		case 5: $u.setMessage( "NARA" );break;
+		case 6: $u.setMessage( "PA" );break;
+		case 7: $u.setMessage( "DO ZOBACZYSKA" );break;
+		case 8: $u.setMessage( "NARAZIE" );break;
+		case 9: $u.setMessage( "CIAO" );break;
 		}
 		System.out.println($u.getMessage());	
-		$u.setStatus(User.Status.pozegnany);
-		modify($u){}
+			
+		modify($u) {setPrzywitanie(User.Przywitanie.POZEGNANY)};
 end

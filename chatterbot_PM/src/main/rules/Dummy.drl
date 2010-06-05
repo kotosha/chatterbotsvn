@@ -1,0 +1,19 @@
+
+package chatbot
+
+#list any import classes here.
+import chatbot.User;
+
+#declare any global variables here
+global chatbot.User user;
+
+rule "Your First Rule"
+no-loop
+salience 10	
+	when
+		#conditions
+	then 
+		#actions
+		
+end
+

@@ -1,20 +1,20 @@
 #created on: 2009-12-08
 package chatbot
-import chatbot.user.User;
-import chatbot.engine.ChatbotEngine;
+
+import chatbot.User;
+import chatbot.ChatbotEngine;
 import java.util.Random;
-import chatbot.helper.Helper;
-import function chatbot.helper.Helper.pasuje;
-import function chatbot.helper.Helper.randomGen;
-import chatbot.chatbot.Chatbot;
-global Chatbot chatbot;
+import chatbot.Helper;
+import function chatbot.Helper.pasuje;
+import function chatbot.Helper.randomGen;
+import chatbot.Chatbot;
 
 
 rule "Wylap wulgaryzmy"
 	salience 100
 	when
 		$u : User()
-	
+		$c : Chatbot(countVulgarism <= 3)
 		
 		eval( 	pasuje($u.getMessage(),"JELEN")  ||
 				pasuje($u.getMessage(),"MENDA")	||
@@ -39,7 +39,28 @@ rule "Wylap wulgaryzmy"
 		case 8: $u.setMessage( "CZY JA BYLEM DLA CIEBIE NIE MILY?" );break;
 		default: $u.setMessage("Blad w : CZY JESTES ");break;
 		}
+		System.out.println($u.getMessage());
+		modify($c){setCountVulgarism(1)}
+		update($c);
 		
-		modify($u){setCountVulgarism()}
-		System.out.println($u.getMessage()+" przeklales "+$u.getCountVulgarism()+" razy");	
+end
+
+rule "Kara za wulgaryzmy"
+no-loop 	
+salience 10
+	when
+		$c : Chatbot (countVulgarism > 3)
+		$u : User()
+	then
+	    switch (randomGen(7)){
+		case 1: $u.setMessage( "OSTRZEGALEM, TAK NIE BEDZIEMY ROZMAWIAC");break;
+		case 2: $u.setMessage( "OBRAZASZ MNIE, ZEGNAJ" );break;
+		case 3: $u.setMessage( "JESTES WULGARNY, TO BYLO OSTATNIE OSTRZEZENIE" );break;
+		case 4: $u.setMessage( "JESTES ZLE WYCHOWANY, NIE BEDE Z TOBA GADAC" );break;
+		case 5: $u.setMessage( "KONIEC, CZESZ" );break;
+		case 7: $u.setMessage( "MIALES OSTATNIA SZANSE, CZESC" );break;
+		}
+		System.out.println($u.getMessage());
+		System.exit(0);
+		
 end
